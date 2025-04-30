@@ -11,7 +11,6 @@ import time
 
 
 
-# Product catalog (ID → name, HSN, price, tax%)
 products = {
     "101": ("HP Pavillion Laptop", "85044016", 60666, 18),
     "102": ("Wireless Mouse", "84716060", 400, 18),
@@ -41,7 +40,6 @@ products = {
 
 csv_file = r"C:\Users\akash\Hirishi Python\AutoInvoiceProject\invoice_data.csv"
 
-# Write header if needed
 if not os.path.exists(csv_file):
     with open(csv_file, mode='w', newline='') as f:
         writer = csv.writer(f)
@@ -130,7 +128,6 @@ def scan_thread():
                 last_scan_time[pid] = now
                 name, hsn, price, tax = products[pid]
 
-                # Read existing rows
                 with open(csv_file, newline='') as f:
                     rows = list(csv.reader(f))
 
@@ -138,17 +135,15 @@ def scan_thread():
                 data = rows[1:]
                 updated = False
 
-                # Try to update qty if product exists
                 for row in data:
                     if row[0] == name:
-                        row[2] = str(int(row[2]) + 1)  # increase Qty
+                        row[2] = str(int(row[2]) + 1) 
                         updated = True
                         break
 
                 if not updated:
                     data.append([name, hsn, 1, price, 0, tax])
 
-                # Write back to CSV
                 with open(csv_file, mode='w', newline='') as f:
                     writer = csv.writer(f)
                     writer.writerow(header)
@@ -173,7 +168,6 @@ def start_scan_mode():
 
 
 
-# GUI setup
 root = Tk()
 root.title("Devi Sree Retail - Invoice GUI")
 root.geometry("500x550")
